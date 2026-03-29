@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
         name: document.getElementById('opponent-name'),
         hp: document.getElementById('opponent-hp'),
     };
-    const messageBox = document.getElementById('message-box');
     const questionText = document.getElementById('question-text');
     const optionsContainer = document.getElementById('options-container');
     const endMessage = document.getElementById('end-message');
@@ -35,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const restartButton = document.getElementById('restart-button');
 
     // --- 音效庫 ---
-    // 預先建立 Audio 物件以方便控制
     const sfx = {
         hitNormal: new Audio('https://play.pokemonshowdown.com/audio/damage.mp3'),
         hitSuper: new Audio('https://play.pokemonshowdown.com/audio/superdamage.mp3'),
@@ -65,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     Object.keys(pokemonDB).forEach(id => {
         const p = pokemonDB[id];
-        const name = p.name.toLowerCase().replace('-','').replace('.','');
+        const name = p.name.toLowerCase().replace(/-|'|\./g, ''); // More robust name cleaning
         p.img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${id}.gif`;
         p.backImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/back/${id}.gif`;
         p.cry = `https://play.pokemonshowdown.com/audio/cries/${name}.mp3`;
@@ -78,27 +76,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 遊戲主流程 ---
     function init() {
         switchScreen('loading');
-        // 修正：不強制等待，在背景載入
         preloadAssets(); 
         sfx.bgMusic.src = 'https://play.pokemonshowdown.com/audio/music/hgss-title.mp3';
         sfx.bgMusic.volume = 0.2;
     }
 
     async function preloadAssets() {
-        // 修正：這個函式現在只在背景執行，不阻塞遊戲開始
-        // 這裡可以預載入一些關鍵圖片，但我們讓遊戲可以立即開始
-        // 為了確保流暢，我們只等待logo圖片載入完成
-        const logoImg = new Image();
-        logoImg.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/1280px-International_Pok%C3%A9mon_logo.svg.png';
-        
-        try {
-            await logoImg.decode();
-        } catch (e) {
-            console.error("Logo image failed to load, but proceeding anyway.", e);
-        }
-
+        // 修正：不再阻塞遊戲，而是在完成後切換畫面
         loadingText.textContent = '資源準備就緒！';
         startButton.style.display = 'block';
+        
+        // **核心修正**：在資源準備好後，自動切換到開始畫面
+        setTimeout(() => {
+            switchScreen('start');
+        }, 500); // 給玩家 0.5 秒看到 "準備就緒" 的訊息
     }
 
     function switchScreen(screenName) {
@@ -135,37 +126,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function selectPokemon(id) {
         sfx.select.play();
-        const base = pokemonDB[id];
         player = { id: id, hp: 100, maxHp: 100, xp: 0 };
         startBattle();
     }
     
     async function startBattle() {
-        // 1. 重置 UI 狀態
         battleScreen.classList.remove('intro-start');
         playerPokemonEl.classList.remove('faint-animation');
         opponentPokemonEl.classList.remove('faint-animation');
         player.hp = 100;
         opponent.hp = 100;
         
-        // 2. 載入寶可夢資料
         const pData = pokemonDB[player.id];
         playerPokemonEl.src = pData.backImg;
         opponentPokemonEl.src = opponent.img;
         updateBattleUI();
 
-        // 3. 播放 NDS 進場動畫
         switchScreen('battle');
         await new Promise(r => setTimeout(r, 50));
         battleScreen.classList.add('intro-start');
 
-        // 4. 播放寶可夢吼聲
         await new Promise(r => setTimeout(r, 1000));
         new Audio(opponent.cry).play();
         await new Promise(r => setTimeout(r, 300));
         new Audio(pData.cry).play();
         
-        // 5. 等待動畫結束後出題
         await new Promise(r => setTimeout(r, 500));
         sfx.bgMusic.src = 'https://play.pokemonshowdown.com/audio/music/hgss-kanto-trainer-battle.mp3';
         sfx.bgMusic.play().catch(e => {});
@@ -192,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
             opponent.hp -= damage;
             opponentPokemonEl.classList.add('hit-reaction');
             playHitSound(multiplier);
+            player.xp++;
         } else {
             const damage = Math.round(Math.floor(Math.random() * 8) + 10);
             player.hp -= damage;
@@ -230,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const isCaught = Math.random() < 0.5;
             if (isCaught) {
                 endMessage.textContent = `太棒了！你成功捕捉了 ${opponent.name}！`;
-                endImage.src = 'https://i.imgur.com/L1CCyC2.png';
+                endImage.src = 'https://www.pngkit.com/png/full/20-201198_pokemon-pokeball-png.png';
                 setTimeout(() => sfx.capture.play(), 500);
             } else {
                 endMessage.textContent = `哦不！${opponent.name} 逃走了！`;
@@ -243,15 +229,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     restartButton.addEventListener('click', () => {
-        location.reload(); // 最簡單可靠的重置方式
+        location.reload();
     });
 
-    // --- 輔助函式 ---
     function updateBattleUI() {
         const pData = pokemonDB[player.id];
         playerInfo.name.textContent = pData.name;
         playerInfo.hp.style.width = `${Math.max(0, (player.hp / player.maxHp)) * 100}%`;
-        playerInfo.xp.textContent = `XP: ${player.xp}/${pData.evolutionLevel || 'MAX'}`;
+        const evoLevel = pData.evolutionLevel || 'MAX';
+        playerInfo.xp.textContent = `XP: ${player.xp}/${evoLevel}`;
         opponentInfo.name.textContent = opponent.name;
         opponentInfo.hp.style.width = `${Math.max(0, (opponent.hp / opponent.maxHp)) * 100}%`;
     }
@@ -274,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function playAttackFX(fxSrc, targetElement) {
         const fx = document.createElement('img');
-        fx.src = fxSrc;
+        fx.src = fxSrc + `?v=${Date.now()}`; // 防止GIF緩存
         fx.className = 'attack-fx';
         const rect = targetElement.getBoundingClientRect();
         const containerRect = attackFxLayer.getBoundingClientRect();
@@ -292,7 +278,10 @@ document.addEventListener('DOMContentLoaded', () => {
         currentQuestion.options.forEach(option => {
             const button = document.createElement('button');
             button.textContent = option;
-            button.onclick = () => checkAnswer(option);
+            button.onclick = () => {
+                sfx.select.play();
+                checkAnswer(option);
+            };
             optionsContainer.appendChild(button);
         });
         optionsContainer.style.pointerEvents = 'auto';
@@ -322,6 +311,5 @@ document.addEventListener('DOMContentLoaded', () => {
         return Array.from(options).sort(() => Math.random() - 0.5);
     }
     
-    // --- 遊戲啟動 ---
     init();
 });
