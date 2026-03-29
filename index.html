@@ -12,13 +12,13 @@
             <!-- 載入畫面 -->
             <div id="loading-screen" class="screen active">
                 <div class="pokeball-loader"></div>
-                <p>正在進入 NDS 像素世界...</p>
+                <p id="loading-text">正在進入 NDS 像素世界...</p>
             </div>
 
             <!-- 開始畫面 -->
             <div id="start-screen" class="screen">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/1280px-International_Pok%C3%A9mon_logo.svg.png" alt="Pokemon Logo" class="pokemon-logo">
-                <button id="start-button">按此開始</button>
+                <button id="start-button" style="display: none;">按此開始</button>
             </div>
 
             <!-- 角色選擇畫面 -->
@@ -78,6 +78,6 @@
             </div>
         </div>
     </div>
-
+    <script src="script.js"></script>
 </body>
 </html>
