@@ -261,7 +261,7 @@ html, body {
     transform: translateX(-150%);
 }
 .pokemon-sprite {
-    image-rendering: pixelated;
+    image-rendering: pixelated; /* 關鍵：保持像素風格 */
     transform-origin: bottom center;
     animation: idle-bob 2.5s infinite ease-in-out;
 }
