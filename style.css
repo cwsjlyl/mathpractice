@@ -73,9 +73,14 @@ body {
 
 /* 開始畫面 */
 #start-screen {
-    background: url('https://i.imgur.com/aJknR2a.png') no-repeat center center / cover;
+    background: url('https://pic.616pic.com/bg_w1180/00/11/42/7iQn8pf2xC.jpg') no-repeat center center;
+    background-size: cover;
 }
-.pokemon-logo { max-width: 70%; margin-bottom: 30px; }
+.pokemon-logo { 
+    max-width: 80%;
+    max-height: 150px;
+    margin-bottom: 30px; 
+}
 #start-button {
     padding: 15px 30px; font-size: 24px; color: white; background-color: #FFDE00;
     border: 5px solid #3B4CCA; border-radius: 10px; cursor: pointer;
@@ -84,7 +89,7 @@ body {
 
 /* 角色選擇 */
 #select-screen h2 { color: #3B4CCA; font-size: 32px; }
-.selection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.selection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 90%; }
 .pokemon-card {
     border: 3px solid #ddd; border-radius: 10px; cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s; background-color: #f9f9f9;
@@ -133,6 +138,14 @@ body {
 #charge-attack-button:hover { transform: translateX(-50%) scale(1.05); }
 .charge-button-hidden { opacity: 0; pointer-events: none; }
 
+/* 結束畫面 */
+#end-screen img { max-height: 200px; margin: 20px 0; }
+#restart-button {
+     padding: 15px 30px; font-size: 20px; color: white;
+    background-color: #4CAF50; border: 3px solid #388E3C;
+    border-radius: 10px; cursor: pointer;
+}
+
 /* 特效 */
 #floating-text-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
 .floating-text {
@@ -141,7 +154,9 @@ body {
     animation: floatUp 1.5s ease-out forwards;
 }
 .damage-text { color: #ffc107; }
-.feedback-text { font-style: italic; font-family: "Comic Sans MS", cursive; }
+.feedback-text { font-style: italic; font-family: "Comic Sans MS", cursive; font-size: 32px; font-weight: bold; }
+.super-effective { color: #ff5959; text-shadow: 2px 2px 5px #000; }
+.not-very-effective { color: #a4a4a4; text-shadow: 1px 1px 3px #000; }
 
 .attack-animation { animation: shake-horizontal 0.4s; }
 .charge-attack-animation { animation: charge-glow 1s; }
@@ -155,26 +170,3 @@ body {
 @keyframes shake-screen { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
 @keyframes charge-glow { 0% { filter: brightness(1); } 50% { filter: brightness(3) drop-shadow(0 0 20px #ff6b6b); transform: scale(1.2); } 100% { filter: brightness(1); transform: scale(1); } }
 @keyframes mega-glow { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(3.5) drop-shadow(0 0 30px white); } }
-/* (保留所有上一版的 CSS) */
-
-/* 在 style.css 的最下方加入或修改以下樣式 */
-
-.feedback-text {
-    font-style: italic;
-    font-family: "Comic Sans MS", cursive;
-    /* 讓提示文字更大更顯眼 */
-    font-size: 32px; 
-    font-weight: bold;
-}
-
-/* 效果絕佳的文字顏色 */
-.super-effective {
-    color: #ff5959; /* 鮮紅色 */
-    text-shadow: 2px 2px 5px #000;
-}
-
-/* 效果不好的文字顏色 */
-.not-very-effective {
-    color: #a4a4a4; /* 灰色 */
-    text-shadow: 1px 1px 3px #000;
-}
