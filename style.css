@@ -1,0 +1,180 @@
+body {
+    font-family: 'Helvetica Neue', 'Arial', 'Microsoft JhengHei', sans-serif;
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    touch-action: manipulation;
+}
+
+#game-container {
+    width: 100%;
+    max-width: 800px;
+    height: 600px;
+    border: 10px solid #2a75bb;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 0 25px rgba(255,255,255,0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.screen {
+    display: none;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* 載入畫面 */
+.pokeball-loader {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(to bottom, #ff1f1f 50%, white 50%);
+    border-radius: 50%;
+    border: 4px solid black;
+    position: relative;
+    animation: spin 1s linear infinite;
+}
+.pokeball-loader::before {
+    content: '';
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    background: black;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.pokeball-loader::after {
+    content: '';
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: white;
+    border: 4px solid black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#loading-screen p { font-size: 20px; color: #555; margin-top: 15px; }
+
+/* 開始畫面 */
+#start-screen {
+    background: url('https://i.imgur.com/aJknR2a.png') no-repeat center center / cover;
+}
+.pokemon-logo { max-width: 70%; margin-bottom: 30px; }
+#start-button {
+    padding: 15px 30px; font-size: 24px; color: white; background-color: #FFDE00;
+    border: 5px solid #3B4CCA; border-radius: 10px; cursor: pointer;
+    text-shadow: 2px 2px #CC0000; animation: bounce 1s infinite;
+}
+
+/* 角色選擇 */
+#select-screen h2 { color: #3B4CCA; font-size: 32px; }
+.selection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.pokemon-card {
+    border: 3px solid #ddd; border-radius: 10px; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s; background-color: #f9f9f9;
+}
+.pokemon-card:hover { transform: scale(1.1); box-shadow: 0 0 15px #FFDE00; }
+.pokemon-card img { width: 80%; margin-top: 5px; }
+.pokemon-card p { margin: 5px 0; font-weight: bold; color: #333; }
+
+/* 戰鬥畫面 */
+#battle-screen {
+    background: url('https://i.imgur.com/YwGJhQA.png') no-repeat center center / cover;
+    justify-content: flex-start;
+}
+#battle-arena { width: 100%; height: 55%; position: relative; }
+.player-side, .opponent-side { position: absolute; width: 45%; }
+.opponent-side { top: 5%; right: 5%; text-align: left; }
+.player-side { bottom: 0; left: 5%; text-align: right; }
+#player-pokemon, #opponent-pokemon { max-height: 180px; max-width: 180px; transition: transform 0.2s; }
+.pokemon-info {
+    background-color: rgba(248, 248, 248, 0.9); border: 3px solid #A0A0A0;
+    border-radius: 8px; padding: 5px 10px; font-size: 16px; width: 180px;
+}
+.hp-bar-container { background-color: #777; border-radius: 5px; height: 12px; margin: 5px 0; border: 1px solid #333;}
+.hp-bar { background: linear-gradient(to right, #28a745, #86e39b); height: 100%; width: 100%; border-radius: 4px; transition: width 0.5s;}
+#player-xp-text { font-size: 14px; color: #3B4CCA; font-weight: bold; }
+
+#question-area {
+    width: 100%; height: 45%; background-color: rgba(0, 0, 0, 0.7); color: white;
+    border-top: 5px solid #FFDE00; display: flex; flex-direction: column; position: relative;
+}
+#question-text { flex-grow: 1; display: flex; justify-content: center; align-items: center; font-size: 26px; padding: 10px; }
+#options-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
+.option-button {
+    background-color: #f8f8f8; color: #333; border: 2px solid #ccc;
+    border-radius: 50px; padding: 12px; font-size: 20px; cursor: pointer; transition: background-color 0.2s;
+}
+.option-button:hover { background-color: #e0e0e0; }
+
+#charge-attack-button {
+    position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+    padding: 12px 25px; font-size: 18px; font-weight: bold; color: white;
+    background: linear-gradient(45deg, #ff6b6b, #f06595); border: none;
+    border-radius: 30px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    transition: transform 0.2s, opacity 0.3s;
+}
+#charge-attack-button:hover { transform: translateX(-50%) scale(1.05); }
+.charge-button-hidden { opacity: 0; pointer-events: none; }
+
+/* 特效 */
+#floating-text-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+.floating-text {
+    position: absolute; font-size: 28px; font-weight: bold;
+    text-shadow: 2px 2px 3px #000; color: #fff;
+    animation: floatUp 1.5s ease-out forwards;
+}
+.damage-text { color: #ffc107; }
+.feedback-text { font-style: italic; font-family: "Comic Sans MS", cursive; }
+
+.attack-animation { animation: shake-horizontal 0.4s; }
+.charge-attack-animation { animation: charge-glow 1s; }
+.mega-evolve-animation { animation: mega-glow 2.5s; }
+.screen-shake { animation: shake-screen 0.3s; }
+
+@keyframes floatUp { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(-80px) scale(1.5); } }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes shake-horizontal { 0%,100%{transform:translateX(0)} 10%,30%,50%,70%,90%{transform:translateX(-8px)} 20%,40%,60%,80%{transform:translateX(8px)} }
+@keyframes shake-screen { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
+@keyframes charge-glow { 0% { filter: brightness(1); } 50% { filter: brightness(3) drop-shadow(0 0 20px #ff6b6b); transform: scale(1.2); } 100% { filter: brightness(1); transform: scale(1); } }
+@keyframes mega-glow { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(3.5) drop-shadow(0 0 30px white); } }
+/* (保留所有上一版的 CSS) */
+
+/* 在 style.css 的最下方加入或修改以下樣式 */
+
+.feedback-text {
+    font-style: italic;
+    font-family: "Comic Sans MS", cursive;
+    /* 讓提示文字更大更顯眼 */
+    font-size: 32px; 
+    font-weight: bold;
+}
+
+/* 效果絕佳的文字顏色 */
+.super-effective {
+    color: #ff5959; /* 鮮紅色 */
+    text-shadow: 2px 2px 5px #000;
+}
+
+/* 效果不好的文字顏色 */
+.not-very-effective {
+    color: #a4a4a4; /* 灰色 */
+    text-shadow: 1px 1px 3px #000;
+}

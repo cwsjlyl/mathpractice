@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Pokemon 數學對戰 GO!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 音效庫 -->
+    <audio id="bg-music" loop></audio>
+    <audio id="attack-sound"></audio>
+    <audio id="victory-music"></audio>
+    <audio id="capture-sound"></audio>
+    <audio id="evo-sound"></audio>
+
+    <div id="game-container">
+        <!-- 載入畫面 -->
+        <div id="loading-screen" class="screen">
+            <div class="pokeball-loader"></div>
+            <p>載入中...</p>
+        </div>
+
+        <!-- 開始畫面 -->
+        <div id="start-screen" class="screen active">
+            <img src="https://i.imgur.com/E4f9d6D.png" alt="Pokemon Logo" class="pokemon-logo">
+            <button id="start-button">按此開始</button>
+        </div>
+
+        <!-- 角色選擇畫面 -->
+        <div id="select-screen" class="screen">
+            <h2>選擇你的夥伴</h2>
+            <div id="pokemon-selection" class="selection-grid"></div>
+        </div>
+
+        <!-- 戰鬥畫面 -->
+        <div id="battle-screen" class="screen">
+            <div id="battle-arena">
+                <!-- 浮動特效容器 -->
+                <div id="floating-text-container"></div>
+                <div class="opponent-side">
+                    <div id="opponent-info" class="pokemon-info">
+                        <span id="opponent-name"></span>
+                        <div class="hp-bar-container"><div id="opponent-hp" class="hp-bar"></div></div>
+                    </div>
+                    <img id="opponent-pokemon" src="" alt="Opponent Pokemon">
+                </div>
+                <div class="player-side">
+                    <img id="player-pokemon" src="" alt="Player Pokemon">
+                    <div id="player-info" class="pokemon-info">
+                        <span id="player-name"></span>
+                        <div class="hp-bar-container"><div id="player-hp" class="hp-bar"></div></div>
+                        <span id="player-xp-text"></span>
+                    </div>
+                </div>
+            </div>
+            <div id="question-area">
+                <div id="question-text"></div>
+                <div id="options-container"></div>
+                <button id="charge-attack-button" class="charge-button-hidden">發動蓄力攻擊！</button>
+            </div>
+        </div>
+        
+        <!-- 結束畫面 -->
+        <div id="end-screen" class="screen">
+            <h2 id="end-message"></h2>
+            <img id="end-image" src="" alt="Result Image">
+            <button id="restart-button">重新挑戰</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
