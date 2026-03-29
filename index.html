@@ -15,15 +15,15 @@
     <audio id="evo-sound"></audio>
 
     <div id="game-container">
-        <!-- 載入畫面 -->
-        <div id="loading-screen" class="screen">
+        <!-- 載入畫面 (預設顯示) -->
+        <div id="loading-screen" class="screen active">
             <div class="pokeball-loader"></div>
-            <p>載入中...</p>
+            <p>遊戲資源載入中...</p>
         </div>
 
-        <!-- 開始畫面 -->
-        <div id="start-screen" class="screen active">
-            <img src="https://i.imgur.com/E4f9d6D.png" alt="Pokemon Logo" class="pokemon-logo">
+        <!-- 開始畫面 (載入後顯示) -->
+        <div id="start-screen" class="screen">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRn74k9jrdLZiWw0dCfb06gfj7SzsJbSBR0cQ&s" alt="Pokemon Logo" class="pokemon-logo">
             <button id="start-button">按此開始</button>
         </div>
 
@@ -36,7 +36,6 @@
         <!-- 戰鬥畫面 -->
         <div id="battle-screen" class="screen">
             <div id="battle-arena">
-                <!-- 浮動特效容器 -->
                 <div id="floating-text-container"></div>
                 <div class="opponent-side">
                     <div id="opponent-info" class="pokemon-info">
