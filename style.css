@@ -18,7 +18,7 @@ body {
     max-width: 1000px;
     height: 90vh;
     max-height: 700px;
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 0.9);
     border: 10px solid #3B4CCA;
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
@@ -314,7 +314,7 @@ button:disabled {
         font-size: 2em;
     }
     #pokemon-selection-grid {
-        margin-top: 80px; /* More space for the preview on small screens */
+        margin-top: 80px;
     }
     .pokemon-card img {
         width: 60px;
