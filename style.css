@@ -1,384 +1,313 @@
-/* --- 基本設定與響應式佈局 --- */
-html, body {
-    height: 100%;
+/* 基本樣式與背景 */
+body {
     margin: 0;
-    padding: 0;
-    background-color: #111;
-    font-family: 'Verdana', 'Microsoft JhengHei', sans-serif;
-    touch-action: manipulation;
-    overflow: hidden;
-}
-
-#game-wrapper {
+    font-family: 'Arial', sans-serif;
+    background-image: url('https://pic.616pic.com/bg_w1180/00/11/42/7iQn8pf2xC.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 100%;
+    min-height: 100vh;
+    overflow: hidden;
 }
 
 #game-container {
     width: 100%;
-    max-width: 800px;
-    height: 100%;
-    max-height: 600px;
-    aspect-ratio: 4 / 3;
-    border: clamp(5px, 2vmin, 10px) solid #000;
-    border-radius: 15px;
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+    max-width: 1000px;
+    height: 90vh;
+    max-height: 700px;
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 10px solid #3B4CCA;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
     position: relative;
     overflow: hidden;
-    background: #000;
 }
 
 .screen {
-    display: none;
+    position: absolute;
     width: 100%;
     height: 100%;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+    padding: 20px;
     box-sizing: border-box;
-    position: absolute;
-    background-color: #fff;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
+    transition: opacity 0.5s ease;
 }
 
-.screen.active {
-    display: flex;
+.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
-/* --- 載入畫面 --- */
-#loading-screen {
-    background: #fff;
-}
-.pokeball-loader {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(to bottom, #ff1f1f 50%, white 50%);
-    border-radius: 50%;
-    border: 4px solid black;
-    position: relative;
-    animation: spin 1s linear infinite;
-}
-.pokeball-loader::before {
-    content: '';
-    position: absolute;
-    height: 4px;
-    width: 100%;
-    background: black;
-    top: 50%;
-    transform: translateY(-50%);
-}
-.pokeball-loader::after {
-    content: '';
-    position: absolute;
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    background: white;
-    border: 4px solid black;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-#loading-text { font-size: 20px; color: #555; margin-top: 15px; }
-
-
-/* --- 開始畫面 --- */
-#start-screen {
-    background: #000 url('https://i.imgur.com/aJknR2a.png') no-repeat center center / cover;
-}
-.pokemon-logo {
-    width: 80%;
-    max-width: 450px;
-    margin-bottom: 10%;
-}
-#start-button {
-    padding: 15px 30px;
-    font-size: clamp(16px, 4vmin, 24px);
-    color: white;
-    background-color: #fdd835;
-    border: 5px solid #3B4CCA;
+/* 按鈕樣式 */
+button {
+    background-color: #FFDE00;
+    border: 3px solid #3B4CCA;
     border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 1.2em;
     cursor: pointer;
-    text-shadow: 2px 2px #c7a500;
-    animation: bounce 1s infinite;
+    box-shadow: 0 4px #B3A125;
+    transition: all 0.1s ease;
 }
 
-
-/* --- 角色選擇畫面 --- */
-#select-screen {
-    justify-content: space-around;
-    background-color: #f5f5f5;
+button:hover {
+    background-color: #fdd500;
+    transform: translateY(-2px);
+    box-shadow: 0 6px #B3A125;
 }
-.opponent-preview {
+
+button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px #B3A125;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    box-shadow: 0 4px #999;
+}
+
+/* 開始畫面 */
+#start-screen .logo {
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+#start-screen h1 {
+    font-size: 3em;
+    color: #CC0000;
+    -webkit-text-stroke: 1.5px #3B4CCA;
+}
+
+/* 選擇 Pokémon 畫面 */
+#enemy-info {
+    position: absolute;
+    top: 10px;
+    right: 20px;
     text-align: center;
-    background: #fff;
+    background: rgba(255,255,255,0.7);
     padding: 10px;
-    border-radius: 15px;
-    border: 3px solid #ddd;
+    border-radius: 10px;
 }
-.opponent-preview h2 {
-    font-size: clamp(14px, 3.5vmin, 20px);
-    color: #e74c3c;
-    margin: 0 0 5px 0;
-    font-weight: bold;
+
+#enemy-preview-img {
+    width: 80px;
+    height: 80px;
 }
-.opponent-preview h3 {
-    font-size: clamp(16px, 4vmin, 22px);
-    margin: 5px 0;
-    color: #333;
-}
-#opponent-preview-img {
-    width: clamp(60px, 15vmin, 100px);
-    image-rendering: pixelated;
-}
-#select-screen > h2 {
-    margin: 15px 0 10px 0;
-    font-size: clamp(16px, 4vmin, 22px);
-}
-.selection-grid {
+
+#pokemon-selection-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 15px;
-    width: 95%;
-    max-height: 55%;
+    width: 90%;
+    max-height: 60%;
     overflow-y: auto;
     padding: 10px;
-    background: rgba(255,255,255,0.7);
-    border-radius: 10px;
+    margin-top: 60px; /* Space for enemy info */
 }
+
 .pokemon-card {
-    border: 4px solid #eee;
+    border: 3px solid #ccc;
     border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.2s;
-    background: #fff;
     padding: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-.pokemon-card:hover {
-    transform: scale(1.08);
-    border-color: #fdd835;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-.pokemon-card img {
-    width: 96px;
-    height: 96px;
-    image-rendering: pixelated;
-}
-.pokemon-card p {
-    margin: 5px 0 0 0;
-    font-weight: bold;
-    color: #333;
-}
-
-
-/* --- NDS 戰鬥畫面佈局 --- */
-#battle-screen {
-    padding: 0;
-    background-color: #000;
-}
-#battle-bg {
-    width: 100%;
-    height: 72%;
-    position: absolute;
-    top: 0;
-    background: url('https://i.imgur.com/71oDGNy.png') no-repeat center bottom / 100% 100%;
-    transform: translateY(-100%); /* For intro anim */
-}
-#battle-arena {
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-#message-box {
-    width: 100%;
-    height: 28%;
-    position: absolute;
-    bottom: 0;
-    background: url('https://i.imgur.com/khjXCk1.png') no-repeat center center / 100% 100%;
-    color: #444;
-    padding: 2% 4%;
-    box-sizing: border-box;
-    display: flex;
-    opacity: 0; /* For intro anim */
-}
-#question-text {
-    width: 50%;
-    font-size: clamp(16px, 3.5vmin, 22px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-right: 2%;
-    box-sizing: border-box;
-    line-height: 1.4;
-}
-#options-container {
-    width: 50%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8%;
-}
-.option-button {
-    background: url('https://i.imgur.com/Y8X4T5b.png') no-repeat center center;
-    background-size: 100% 100%;
-    border: none;
-    font-size: clamp(14px, 3vmin, 20px);
-    color: #444;
     cursor: pointer;
-    font-weight: bold;
-    padding: 0;
-    transition: transform 0.1s;
+    transition: all 0.2s ease;
+    background-color: rgba(255, 255, 255, 0.6);
 }
-.option-button:hover {
+
+.pokemon-card:hover {
+    border-color: #3B4CCA;
     transform: scale(1.05);
 }
-.option-button:active {
-    transform: scale(0.98);
+
+.pokemon-card.selected {
+    border-color: #FFDE00;
+    background-color: #3B4CCA;
+    color: white;
 }
 
-
-/* --- 寶可夢與資訊框 --- */
-.pokemon-container {
-    position: absolute;
-    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+.pokemon-card img {
+    width: 80px;
+    height: 80px;
 }
-.opponent-side {
-    top: 15%;
-    right: 10%;
-    transform: translateX(150%);
-}
-.player-side {
-    bottom: 0%; /* NDS的寶可夢是站在平台上的 */
-    left: 5%;
-    transform: translateX(-150%);
-}
-.pokemon-sprite {
-    image-rendering: pixelated; /* 關鍵：保持像素風格 */
-    transform-origin: bottom center;
-    animation: idle-bob 2.5s infinite ease-in-out;
-}
-#opponent-pokemon {
-    width: clamp(120px, 20vmin, 160px);
-}
-#player-pokemon {
-    width: clamp(160px, 30vmin, 220px);
-}
-.info-box {
-    background: url('https://i.imgur.com/v0as5eR.png') no-repeat center center / 100% 100%;
-    padding: 1.5% 3.5%;
-    position: absolute;
-    width: clamp(200px, 35vmin, 250px);
-    opacity: 0;
-    color: #444;
-    font-weight: bold;
-    font-size: clamp(14px, 3vmin, 18px);
-}
-#opponent-info {
-    top: 5%;
-    left: 5%;
-}
-#player-info {
-    bottom: 30%;
-    right: 5%;
-}
-.hp-bar-container {
-    background-color: #c0c0c0;
-    border-radius: 5px;
-    height: clamp(8px, 1.5vmin, 12px);
-    margin: 5px 0;
-    border: 1px solid #777;
-}
-.hp-bar {
-    background: #32CD32;
-    height: 100%;
-    width: 100%;
-    border-radius: 4px;
-    transition: width 0.5s;
-}
-#player-xp-text {
-    font-size: clamp(10px, 2.5vmin, 14px);
-    color: #3B4CCA;
+#confirm-selection-button{
+    margin-top: 20px;
 }
 
-
-/* --- NDS 動畫與特效 --- */
-.battle-intro-bar {
-    position: absolute;
+/* 戰鬥畫面 */
+#battle-arena {
     width: 100%;
     height: 50%;
-    background: #000;
-    z-index: 10;
-    transform: translateY(0);
+    position: relative;
+    background: url('https://www.models-resource.com/resources/big_icons/12/11993.png') no-repeat center bottom;
+    background-size: 90% 60%;
 }
-.battle-intro-bar.top { top: 0; }
-.battle-intro-bar.bottom { bottom: 0; }
 
-#attack-fx-layer {
+.pokemon-display {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 5;
 }
-.attack-fx {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    image-rendering: pixelated;
-    width: clamp(150px, 30vmin, 200px); /* 特效大小 */
+
+.pokemon-display.enemy {
+    top: 5%;
+    left: 55%;
+}
+
+.pokemon-display.player {
+    bottom: 0%;
+    left: 10%;
+}
+
+#player-pokemon, #enemy-pokemon {
+    height: 150px;
+    image-rendering: pixelated; /* 像素風格 */
+    transition: transform 0.2s ease;
+}
+/* 攻擊動畫 */
+.attack-animation {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+  20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+
+/* 進化動畫 */
+.evolution-animation {
+    animation: evolve-glow 2.5s ease-in-out;
+}
+@keyframes evolve-glow {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(3) drop-shadow(0 0 15px white); }
+}
+
+/* 狀態框 */
+.status-box {
+    background-color: rgba(240, 240, 240, 0.9);
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 5px;
+    width: 200px;
+}
+
+.hp-bar-container {
+    width: 100%;
+    height: 15px;
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.hp-bar {
+    height: 100%;
+    width: 100%;
+    background-color: #4CAF50; /* Green */
+    transition: width 0.5s ease;
+}
+
+#evolution-progress {
+    font-size: 0.8em;
+    margin-top: 5px;
+}
+
+/* 訊息與問題區域 */
+#message-log {
+    width: 90%;
+    height: 15%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-y: auto;
+    font-family: monospace;
+    text-align: left;
+}
+
+#question-area {
+    width: 100%;
+    height: 35%;
+    padding-top: 10px;
+}
+#options-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 0 20px;
+}
+#options-container button {
+    width: 100%;
 }
 
 /* 結束畫面 */
-#end-screen {
-    background: #000;
-    color: #fff;
-}
-#end-message { font-size: clamp(20px, 5vmin, 30px); }
-#end-image { max-height: 200px; margin: 20px 0; image-rendering: pixelated; }
-#restart-button {
-    padding: 15px 30px; font-size: 20px; color: white; background-color: #4CAF50;
-    border: 3px solid #388E3C; border-radius: 10px; cursor: pointer;
+#end-screen h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
 }
 
-
-/* --- 關鍵影格動畫 (Keyframes) --- */
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-@keyframes idle-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-
-/* 進場動畫 */
-.intro-start .battle-intro-bar.top { animation: slide-up 0.5s forwards ease-in-out; }
-.intro-start .battle-intro-bar.bottom { animation: slide-down 0.5s forwards ease-in-out; }
-.intro-start #battle-bg { animation: slide-in-bg 0.5s 0.3s forwards ease-out; }
-.intro-start .info-box, .intro-start #message-box { animation: fade-in 0.5s 1.2s forwards; }
-@keyframes slide-up { to { transform: translateY(-100%); } }
-@keyframes slide-down { to { transform: translateY(100%); } }
-@keyframes slide-in-bg { to { transform: translateY(0); } }
-@keyframes fade-in { to { opacity: 1; } }
-
-/* 攻擊動畫 */
-.attack-charge { animation: charge-anim 0.5s ease-in-out; }
-@keyframes charge-anim {
-    50% { transform: translate(-20px, -5px) scale(1.05); }
+#capture-result-img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 10px;
 }
-.hit-reaction { animation: hit-shake 0.4s linear; }
-@keyframes hit-shake {
-    0%, 100% { visibility: visible; }
-    25%, 75% { visibility: hidden; }
+#play-again-button {
+    margin-top: 20px;
 }
 
-/* 昏倒動畫 */
-.faint-animation { animation: faint 1.2s forwards ease-in; }
-@keyframes faint {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(100px); opacity: 0; }
+/* 響應式設計 */
+@media (max-width: 768px) { /* iPad and smaller */
+    #game-container {
+        height: 100vh;
+        max-height: none;
+        border-radius: 0;
+        border: none;
+    }
+    
+    #pokemon-selection-grid {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 10px;
+    }
+
+    #player-pokemon, #enemy-pokemon {
+        height: 100px;
+    }
+
+    .status-box {
+        width: 150px;
+        font-size: 0.9em;
+    }
 }
+@media (max-width: 480px) { /* iPhone and smaller */
+     #start-screen h1 {
+        font-size: 2em;
+    }
+    #pokemon-selection-grid {
+        margin-top: 80px; /* More space for the preview on small screens */
+    }
+    .pokemon-card img {
+        width: 60px;
+        height: 60px;
+    }
+    #battle-arena {
+        height: 45%;
+    }
+    #message-log {
+        height: 20%;
+    }
+    #question-area {
+        height: 35%;
+    }
+    #options-container {
+        grid-template-columns: 1fr;
+    }
+}
+
