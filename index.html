@@ -2,80 +2,69 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pokemon NDS 數學對戰</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Math Battle</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="game-wrapper">
-        <div id="game-container">
-            <!-- 載入畫面 -->
-            <div id="loading-screen" class="screen active">
-                <div class="pokeball-loader"></div>
-                <p id="loading-text">正在進入 NDS 像素世界...</p>
-            </div>
+    <div id="game-container">
+        <!-- 開始畫面 -->
+        <div id="start-screen" class="screen">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRn74k9jrdLZiWw0dCfb06gfj7SzsJbSBR0cQ&s" alt="Game Logo" class="logo">
+            <h1>數學對戰</h1>
+            <button id="start-button">開始遊戲</button>
+        </div>
 
-            <!-- 開始畫面 -->
-            <div id="start-screen" class="screen">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/1280px-International_Pok%C3%A9mon_logo.svg.png" alt="Pokemon Logo" class="pokemon-logo">
-                <button id="start-button" style="display: none;">按此開始</button>
+        <!-- 選擇 Pokémon 畫面 -->
+        <div id="selection-screen" class="screen hidden">
+            <h2>選擇你的 Pokémon</h2>
+            <div id="enemy-info">
+                <p>你的對手將會是：</p>
+                <img id="enemy-preview-img" src="" alt="Enemy Pokémon">
+                <p id="enemy-preview-name"></p>
             </div>
+            <div id="pokemon-selection-grid"></div>
+            <button id="confirm-selection-button" disabled>確定選擇</button>
+        </div>
 
-            <!-- 角色選擇畫面 -->
-            <div id="select-screen" class="screen">
-                <div class="opponent-preview">
-                    <h2>即將挑戰：</h2>
-                    <img id="opponent-preview-img" src="" alt="Opponent">
-                    <h3 id="opponent-preview-name"></h3>
+        <!-- 戰鬥畫面 -->
+        <div id="battle-screen" class="screen hidden">
+            <div id="battle-arena">
+                <div class="pokemon-display enemy">
+                    <div class="status-box">
+                        <span id="enemy-name"></span>
+                        <div class="hp-bar-container">
+                            <div id="enemy-hp-bar" class="hp-bar"></div>
+                        </div>
+                    </div>
+                    <img id="enemy-pokemon" src="" alt="Enemy Pokémon">
                 </div>
-                <h2>選擇你的夥伴 (點擊出戰)</h2>
-                <div id="pokemon-selection" class="selection-grid"></div>
-            </div>
-
-            <!-- 戰鬥畫面 -->
-            <div id="battle-screen" class="screen">
-                <!-- NDS風格進場動畫黑邊 -->
-                <div class="battle-intro-bar top"></div>
-                <div class="battle-intro-bar bottom"></div>
-
-                <div id="battle-bg">
-                    <div id="battle-arena">
-                        <!-- 攻擊特效層 -->
-                        <div id="attack-fx-layer"></div>
-
-                        <!-- 對手 -->
-                        <div class="pokemon-container opponent-side">
-                            <img id="opponent-pokemon" src="" class="pokemon-sprite">
+                <div class="pokemon-display player">
+                     <img id="player-pokemon" src="" alt="Player Pokémon">
+                    <div class="status-box">
+                        <span id="player-name"></span>
+                        <div class="hp-bar-container">
+                            <div id="player-hp-bar" class="hp-bar"></div>
                         </div>
-                         <div id="opponent-info" class="info-box">
-                            <span id="opponent-name"></span>
-                            <div class="hp-bar-container"><div id="opponent-hp" class="hp-bar"></div></div>
-                        </div>
-
-                        <!-- 玩家 -->
-                        <div class="pokemon-container player-side">
-                            <img id="player-pokemon" src="" class="pokemon-sprite">
-                        </div>
-                        <div id="player-info" class="info-box">
-                            <span id="player-name"></span>
-                            <div class="hp-bar-container"><div id="player-hp" class="hp-bar"></div></div>
-                            <span id="player-xp-text"></span>
+                         <div id="evolution-progress">
+                            進化進度: <span id="evo-counter">0</span> / <span id="evo-goal">5</span>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div id="message-log"></div>
+            <div id="question-area">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        </div>
 
-                <div id="message-box">
-                    <div id="question-text"></div>
-                    <div id="options-container"></div>
-                </div>
-            </div>
-            
-            <!-- 結束畫面 -->
-            <div id="end-screen" class="screen">
-                <h2 id="end-message"></h2>
-                <img id="end-image" src="" alt="Result Image">
-                <button id="restart-button">返回主畫面</button>
-            </div>
+        <!-- 遊戲結束畫面 -->
+        <div id="end-screen" class="screen hidden">
+            <h2 id="end-message"></h2>
+            <img id="capture-result-img" src="" alt="Result" class="hidden">
+            <p id="capture-text"></p>
+            <button id="play-again-button">重新開始</button>
         </div>
     </div>
     <script src="script.js"></script>
