@@ -17,7 +17,7 @@
 
         <!-- 選擇 Pokémon 畫面 -->
         <div id="selection-screen" class="screen hidden">
-            <h2>選擇你的 Pokémon</h2>
+            <h2 id="selection-title">選擇你的 Pokémon</h2>
             <div id="enemy-info">
                 <p>你的對手將會是：</p>
                 <img id="enemy-preview-img" src="" alt="Enemy Pokémon">
@@ -47,7 +47,7 @@
                             <div id="player-hp-bar" class="hp-bar"></div>
                         </div>
                          <div id="evolution-progress">
-                            進化進度: <span id="evo-counter">0</span>
+                            進化倒數: <span id="evo-counter">5</span>
                         </div>
                     </div>
                 </div>
@@ -68,8 +68,8 @@
             <img id="capture-result-img" src="" alt="Result" class="hidden">
             <p id="capture-text"></p>
             <div id="end-buttons-container">
-                <button id="play-again-same-pokemon-button">挑戰其他傳說</button>
                 <button id="play-again-new-pokemon-button">重選 Pokémon</button>
+                <button id="play-again-legendary-button">使用傳說 Pokémon</button>
             </div>
         </div>
     </div>
