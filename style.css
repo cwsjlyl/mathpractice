@@ -8,9 +8,10 @@ body {
     color: #333;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* 改為 flex-start 以應對滾動 */
     min-height: 100vh;
-    overflow: hidden;
+    padding: 10px 0; /* 增加上下邊距 */
+    box-sizing: border-box;
 }
 
 #game-container {
@@ -23,11 +24,15 @@ body {
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
     position: relative;
-    overflow: hidden;
+    overflow: hidden; /* 在大螢幕上保持內容不超出 */
+    display: flex; /* 使用 flex 佈局 */
+    flex-direction: column; /* 讓 screen 垂直排列 */
 }
 
 .screen {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     display: flex;
@@ -56,6 +61,7 @@ button {
     box-shadow: 0 4px #B3A125;
     transition: all 0.1s ease;
     margin: 5px;
+    -webkit-tap-highlight-color: transparent; /* 移除行動裝置點擊高亮 */
 }
 
 button:hover {
@@ -96,6 +102,7 @@ button:disabled {
     background: rgba(255,255,255,0.7);
     padding: 10px;
     border-radius: 10px;
+    z-index: 10;
 }
 
 #enemy-preview-img {
@@ -111,7 +118,7 @@ button:disabled {
     max-height: 60%;
     overflow-y: auto;
     padding: 10px;
-    margin-top: 60px; /* Space for enemy info */
+    margin-top: 60px;
 }
 
 .pokemon-card {
@@ -144,9 +151,14 @@ button:disabled {
 }
 
 /* 戰鬥畫面 */
+#battle-screen {
+    justify-content: flex-start; /* 從頂部開始佈局 */
+}
+
 #battle-arena {
     width: 100%;
-    height: 50%;
+    height: 45%; /* 調整高度比例 */
+    min-height: 240px;
     position: relative;
     background: url('https://www.models-resource.com/resources/big_icons/12/11993.png') no-repeat center bottom;
     background-size: 90% 60%;
@@ -168,24 +180,17 @@ button:disabled {
 
 #player-pokemon, #enemy-pokemon {
     height: 150px;
-    image-rendering: pixelated; /* 像素風格 */
+    image-rendering: pixelated;
     transition: transform 0.2s ease;
 }
-/* 攻擊動畫 */
-.attack-animation {
-    animation: shake 0.5s;
-}
-
+.attack-animation { animation: shake 0.5s; }
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
   20%, 40%, 60%, 80% { transform: translateX(10px); }
 }
 
-/* 進化動畫 - 參考YouTube影片風格，使用閃光和變亮效果 */
-.evolution-animation {
-    animation: evolve-glow 2.5s ease-in-out;
-}
+.evolution-animation { animation: evolve-glow 2.5s ease-in-out; }
 @keyframes evolve-glow {
     0%, 100% { filter: brightness(1); }
     50% { filter: brightness(4) drop-shadow(0 0 20px white); }
@@ -211,7 +216,7 @@ button:disabled {
 .hp-bar {
     height: 100%;
     width: 100%;
-    background-color: #4CAF50; /* Green */
+    background-color: #4CAF50;
     transition: width 0.5s ease;
 }
 
@@ -223,7 +228,8 @@ button:disabled {
 /* 訊息與問題區域 */
 #message-log {
     width: 90%;
-    height: 15%;
+    height: 20%;
+    min-height: 80px;
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
     border: 2px solid #333;
@@ -232,12 +238,13 @@ button:disabled {
     overflow-y: auto;
     font-family: monospace;
     text-align: left;
+    margin-top: 10px;
 }
 
 #question-area {
     width: 100%;
-    height: 35%;
-    padding-top: 10px;
+    padding: 10px 0;
+    flex-grow: 1; /* 佔用剩餘空間 */
 }
 
 /* 計時器 */
@@ -267,6 +274,7 @@ button:disabled {
 }
 #options-container button {
     width: 100%;
+    min-height: 48px; /* 確保按鈕有足夠高度 */
 }
 
 /* 結束畫面 */
@@ -286,13 +294,20 @@ button:disabled {
     justify-content: center;
 }
 
-/* 響應式設計 */
-@media (max-width: 768px) { /* iPad and smaller */
+/* 響應式設計 (針對手機等小螢幕) */
+@media (max-width: 768px) {
+    body {
+        align-items: flex-start; /* 確保從頂部開始 */
+        padding: 0; /* 移除 body 的 padding */
+    }
+
     #game-container {
-        height: 100vh;
+        height: auto; /* 高度由內容決定 */
+        min-height: 100vh; /* 至少佔滿整個螢幕 */
         max-height: none;
         border-radius: 0;
         border: none;
+        overflow-y: auto; /* 允許垂直滾動！ */
     }
     
     #pokemon-selection-grid {
@@ -303,35 +318,19 @@ button:disabled {
     #player-pokemon, #enemy-pokemon {
         height: 100px;
     }
+    #battle-arena {
+        min-height: 200px;
+    }
 
     .status-box {
         width: 150px;
         font-size: 0.9em;
     }
-}
-@media (max-width: 480px) { /* iPhone and smaller */
-     #start-screen h1 {
-        font-size: 2em;
-    }
-    #pokemon-selection-grid {
-        margin-top: 80px;
-    }
-    .pokemon-card img {
-        width: 60px;
-        height: 60px;
-    }
-    #battle-arena {
-        height: 45%;
-    }
-    #message-log {
-        height: 20%;
-    }
-    #question-area {
-        height: 35%;
-    }
+
     #options-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* iPhone 上單行顯示 */
     }
+
     #end-buttons-container {
         flex-direction: column;
     }
