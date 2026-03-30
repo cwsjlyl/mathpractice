@@ -47,13 +47,16 @@
                             <div id="player-hp-bar" class="hp-bar"></div>
                         </div>
                          <div id="evolution-progress">
-                            進化進度: <span id="evo-counter">0</span> / <span id="evo-goal">5</span>
+                            進化進度: <span id="evo-counter">0</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div id="message-log"></div>
             <div id="question-area">
+                <div id="timer-container">
+                    <div id="timer-bar"></div>
+                </div>
                 <p id="question-text"></p>
                 <div id="options-container"></div>
             </div>
@@ -64,7 +67,10 @@
             <h2 id="end-message"></h2>
             <img id="capture-result-img" src="" alt="Result" class="hidden">
             <p id="capture-text"></p>
-            <button id="play-again-button">重新開始</button>
+            <div id="end-buttons-container">
+                <button id="play-again-same-pokemon-button">挑戰其他傳說</button>
+                <button id="play-again-new-pokemon-button">重選 Pokémon</button>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
