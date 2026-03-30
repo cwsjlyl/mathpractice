@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- 遊戲資料 ---
-    // (Pokémon 資料庫與之前版本相同，此處為節省篇幅省略，請直接複製貼上即可)
+    // 修正了所有超級進化和極巨化的圖片連結，特別是噴火龍X
     const POKEMON_DATA = {
         bulbasaur: { name: 'Bulbasaur', type: ['Grass', 'Poison'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/bulbasaur.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/bulbasaur.gif', evolution: { name: 'Ivysaur', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/ivysaur.gif', evolution: { name: 'Venusaur', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/venusaur.gif', mega: {name: 'Mega Venusaur', back_img: 'https://img.pokemondb.net/sprites/xy/anim/back-normal/venusaur-mega.gif'} } } },
-        charmander: { name: 'Charmander', type: ['Fire'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/charmander.gif', evolution: { name: 'Charmeleon', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/charmeleon.gif', evolution: { name: 'Charizard', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/charizard.gif', mega: {name: 'Mega Charizard Y', back_img: 'https://img.pokemondb.net/sprites/xy/anim/back-normal/charizard-mega-y.gif'} } } },
+        charmander: { name: 'Charmander', type: ['Fire'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/charmander.gif', evolution: { name: 'Charmeleon', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/charmeleon.gif', evolution: { name: 'Charizard', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/charizard.gif', mega: {name: 'Mega Charizard X', back_img: 'https://img.pokemondb.net/sprites/xy/anim/back-normal/charizard-mega-x.gif'} } } }, // 修正為 X
         squirtle: { name: 'Squirtle', type: ['Water'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/squirtle.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/squirtle.gif', evolution: { name: 'Wartortle', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/wartortle.gif', evolution: { name: 'Blastoise', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/blastoise.gif', mega: {name: 'Mega Blastoise', back_img: 'https://img.pokemondb.net/sprites/xy/anim/back-normal/blastoise-mega.gif'} } } },
         caterpie: { name: 'Caterpie', type: ['Bug'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/caterpie.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/caterpie.gif', evolution: { name: 'Metapod', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/metapod.gif', evolution: { name: 'Butterfree', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/butterfree.gif' }}},
         weedle: { name: 'Weedle', type: ['Bug', 'Poison'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/weedle.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/weedle.gif', evolution: { name: 'Kakuna', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/kakuna.gif', evolution: { name: 'Beedrill', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/beedrill.gif' }}},
@@ -109,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- 音效管理 ---
     const audioManager = {
-        // 使用相對路徑，假設音樂檔案與 index.html 在同一目錄
         battleMusic: new Audio('BattleTrainer Battle.mp3'),
         victoryMusic: new Audio('Victory.mp3'),
         evolutionMusic: new Audio('Evolution.mp3'),
@@ -185,13 +184,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function startBattle() {
         audioManager.play(audioManager.battleMusic, true);
 
-        if (!gameState.isLegendaryMode) {
-             const initialPokemon = POKEMON_DATA[gameState.playerPokemonData.key];
-             gameState.playerPokemonData = JSON.parse(JSON.stringify({ ...initialPokemon, key: initialPokemon.key, currentStage: 0 }));
-        } else {
-             const initialLegendary = POKEMON_DATA[gameState.playerPokemonData.key];
-             gameState.playerPokemonData = JSON.parse(JSON.stringify({ ...initialLegendary, key: initialLegendary.key, currentStage: 0 }));
-        }
+        const selectedKey = gameState.playerPokemonData.key;
+        const initialPokemon = POKEMON_DATA[selectedKey];
+        gameState.playerPokemonData = JSON.parse(JSON.stringify({ ...initialPokemon, key: selectedKey, currentStage: 0 }));
 
         gameState.playerCurrentHP = 100;
         gameState.playerMaxHP = 100;
@@ -395,11 +390,13 @@ document.addEventListener('DOMContentLoaded', () => {
             playerName.textContent = gameState.playerPokemonData.name;
             updateBattleUI();
 
-            // 進化音樂播放完後，切回戰鬥音樂
-            audioManager.evolutionMusic.onended = () => {
-                audioManager.play(audioManager.battleMusic, true);
-            };
-            setTimeout(nextQuestion, 2000);
+            const evolutionMusicDuration = 2500; // 假設進化音樂時長
+            setTimeout(() => {
+                if (audioManager.currentMusic === audioManager.evolutionMusic) {
+                     audioManager.play(audioManager.battleMusic, true);
+                }
+                nextQuestion();
+            }, evolutionMusicDuration);
         }, 2500);
     }
 
