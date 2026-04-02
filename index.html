@@ -29,13 +29,12 @@
 
         <!-- 戰鬥畫面 -->
         <div id="battle-screen" class="screen hidden">
+            <button id="pause-button">暫停</button>
             <div id="battle-arena">
                 <div class="pokemon-display enemy">
                     <div class="status-box">
                         <span id="enemy-name"></span>
-                        <div class="hp-bar-container">
-                            <div id="enemy-hp-bar" class="hp-bar"></div>
-                        </div>
+                        <div class="hp-bar-container"><div id="enemy-hp-bar" class="hp-bar"></div></div>
                     </div>
                     <img id="enemy-pokemon" src="" alt="Enemy Pokémon">
                 </div>
@@ -43,22 +42,31 @@
                      <img id="player-pokemon" src="" alt="Player Pokémon">
                     <div class="status-box">
                         <span id="player-name"></span>
-                        <div class="hp-bar-container">
-                            <div id="player-hp-bar" class="hp-bar"></div>
-                        </div>
-                         <div id="evolution-progress">
-                            進化倒數: <span id="evo-counter">5</span>
-                        </div>
+                        <div class="hp-bar-container"><div id="player-hp-bar" class="hp-bar"></div></div>
+                        <div id="evolution-progress">答對題數: <span id="evo-counter">0</span></div>
                     </div>
                 </div>
             </div>
             <div id="message-log"></div>
             <div id="question-area">
-                <div id="timer-container">
-                    <div id="timer-bar"></div>
-                </div>
+                <div id="timer-container"><div id="timer-bar"></div></div>
                 <p id="question-text"></p>
                 <div id="options-container"></div>
+            </div>
+        </div>
+        
+        <!-- 暫停遮罩 -->
+        <div id="pause-overlay" class="overlay hidden">
+            <h1>遊戲暫停</h1>
+            <button id="resume-button">返回遊戲</button>
+        </div>
+
+        <!-- 教學遮罩 -->
+        <div id="teaching-overlay" class="overlay hidden">
+            <div id="teaching-box">
+                <h2>答錯了！</h2>
+                <p id="teaching-text"></p>
+                <div id="teaching-timer">教學將在 <span id="teaching-countdown">10</span> 秒後結束...</div>
             </div>
         </div>
 
