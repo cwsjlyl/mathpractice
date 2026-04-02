@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- 遊戲資料 ---
-    // (Pokémon 資料庫與之前版本相同，此處為節省篇幅省略，請直接複製貼上即可)
+    // 再次擴充 Pokémon 陣容
     const POKEMON_DATA = {
         bulbasaur: { name: 'Bulbasaur', type: ['Grass', 'Poison'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/bulbasaur.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/bulbasaur.gif', evolution: { name: 'Ivysaur', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/ivysaur.gif', evolution: { name: 'Venusaur', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/venusaur.gif', mega: {name: 'Mega Venusaur', back_img: 'https://img.pokemondb.net/sprites/go/normal/venusaur-mega.png'} } } },
         charmander: { name: 'Charmander', type: ['Fire'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/charmander.gif', evolution: { name: 'Charmeleon', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/charmeleon.gif', evolution: { name: 'Charizard', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/charizard.gif', mega: {name: 'Mega Charizard X', back_img: 'https://img.pokemondb.net/sprites/go/normal/charizard-mega_x.png'} } } },
         squirtle: { name: 'Squirtle', type: ['Water'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/squirtle.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/squirtle.gif', evolution: { name: 'Wartortle', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/wartortle.gif', evolution: { name: 'Blastoise', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/blastoise.gif', mega: {name: 'Mega Blastoise', back_img: 'https://img.pokemondb.net/sprites/go/normal/blastoise-mega.png'} } } },
         caterpie: { name: 'Caterpie', type: ['Bug'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/caterpie.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/caterpie.gif', evolution: { name: 'Metapod', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/metapod.gif', evolution: { name: 'Butterfree', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/butterfree.gif' }}},
         weedle: { name: 'Weedle', type: ['Bug', 'Poison'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/weedle.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/weedle.gif', evolution: { name: 'Kakuna', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/kakuna.gif', evolution: { name: 'Beedrill', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/beedrill.gif' }}},
-        pidgey: { name: 'Pidgey', type: ['Normal', 'Flying'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/pidgey.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/pidgey.gif', evolution: { name: 'Pidgeotto', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/pidgeotto.gif', evolution: { name: 'Pidgeot', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/pidgeot.gif' }}},
+        pidgey: { name: 'Pidgey', type: ['Normal', 'Flying'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/pidgey.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/pidgey.gif', evolution: { name: 'Pidgeotto', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/pidgeotto.gif', evolution: { name: 'Pidgeot', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/pidgeot.gif', mega: { name: 'Mega Pidgeot', back_img: 'https://img.pokemondb.net/sprites/go/normal/pidgeot-mega.png' } }}},
         zubat: { name: 'Zubat', type: ['Poison', 'Flying'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/zubat.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/zubat.gif', evolution: { name: 'Golbat', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/golbat.gif', evolution: { name: 'Crobat', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/crobat.gif' }}},
         oddish: { name: 'Oddish', type: ['Grass', 'Poison'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/oddish.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/oddish.gif', evolution: { name: 'Gloom', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/gloom.gif', evolution: { name: 'Vileplume', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/vileplume.gif' }}},
         poliwag: { name: 'Poliwag', type: ['Water'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/poliwag.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/poliwag.gif', evolution: { name: 'Poliwhirl', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/poliwhirl.gif', evolution: { name: 'Poliwrath', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/poliwrath.gif' }}},
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gastly: { name: 'Gastly', type: ['Ghost', 'Poison'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/gastly.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/gastly.gif', evolution: { name: 'Haunter', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/haunter.gif', evolution: { name: 'Gengar', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/gengar.gif', gmax: { name: 'Gigantamax Gengar', back_img: 'https://img.pokemondb.net/sprites/go/normal/gengar-gigantamax.png' }} } },
         horsea: { name: 'Horsea', type: ['Water'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/horsea.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/horsea.gif', evolution: { name: 'Seadra', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/seadra.gif', evolution: { name: 'Kingdra', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/kingdra.gif' }}},
         magikarp: { name: 'Magikarp', type: ['Water'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/magikarp.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/magikarp.gif', evolution: { name: 'Gyarados', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/gyarados.gif', mega: { name: 'Mega Gyarados', back_img: 'https://img.pokemondb.net/sprites/go/normal/gyarados-mega.png' }}},
-        eevee: { name: 'Eevee', type: ['Normal'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/eevee.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/eevee.gif', evolution: { name: 'Vaporeon', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/vaporeon.gif' }},
+        porygon: { name: 'Porygon', type: ['Normal'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/porygon.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/porygon.gif', evolution: { name: 'Porygon2', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/porygon2.gif', evolution: { name: 'Porygon-Z', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/porygon-z.gif' }}},
         pichu: { name: 'Pichu', type: ['Electric'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/pichu.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/pichu.gif', evolution: { name: 'Pikachu', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/pikachu.gif', evolution: { name: 'Raichu', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/raichu.gif' } } },
         dratini: { name: 'Dratini', type: ['Dragon'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/dratini.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/dratini.gif', evolution: { name: 'Dragonair', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/dragonair.gif', evolution: { name: 'Dragonite', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/dragonite.gif' } } },
         treecko: { name: 'Treecko', type: ['Grass'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/treecko.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/treecko.gif', evolution: { name: 'Grovyle', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/grovyle.gif', evolution: { name: 'Sceptile', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/sceptile.gif', mega: { name: 'Mega Sceptile', back_img: 'https://img.pokemondb.net/sprites/go/normal/sceptile-mega.png' } }}},
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         litwick: { name: 'Litwick', type: ['Ghost', 'Fire'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/litwick.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/litwick.gif', evolution: { name: 'Lampent', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/lampent.gif', evolution: { name: 'Chandelure', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/chandelure.gif' }}},
         axew: { name: 'Axew', type: ['Dragon'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/axew.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/axew.gif', evolution: { name: 'Fraxure', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/fraxure.gif', evolution: { name: 'Haxorus', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/haxorus.gif' }}},
         nidoran_f: { name: 'Nidoran♀', type: ['Poison'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/nidoran-f.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/nidoran-f.gif', evolution: { name: 'Nidorina', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/nidorina.gif', evolution: { name: 'Nidoqueen', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/nidoqueen.gif' }}},
-
+        
         // 可選傳說 Pokémon
         mew: { name: 'Mew', type: ['Psychic'], isLegendary: true, front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/mew.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/mew.gif' },
         celebi: { name: 'Celebi', type: ['Psychic', 'Grass'], isLegendary: true, front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/celebi.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/celebi.gif' },
@@ -52,16 +52,19 @@ document.addEventListener('DOMContentLoaded', () => {
         kyogre: { name: 'Kyogre', type: ['Water'], isLegendary: true, front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/kyogre.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/kyogre.gif', primal: { name: 'Primal Kyogre', back_img: 'https://img.pokemondb.net/sprites/go/normal/kyogre-primal.png'}},
         groudon: { name: 'Groudon', type: ['Ground'], isLegendary: true, front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/groudon.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/groudon.gif', primal: { name: 'Primal Groudon', back_img: 'https://img.pokemondb.net/sprites/go/normal/groudon-primal.png'}},
         rayquaza: { name: 'Rayquaza', type: ['Dragon', 'Flying'], isLegendary: true, front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/rayquaza.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/rayquaza.gif', mega: { name: 'Mega Rayquaza', back_img: 'https://img.pokemondb.net/sprites/go/normal/rayquaza-mega.png'}},
+        hooh: { name: 'Ho-Oh', type: ['Fire', 'Flying'], isLegendary: true, front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/ho-oh.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/ho-oh.gif' },
+        lugia: { name: 'Lugia', type: ['Psychic', 'Flying'], isLegendary: true, front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/lugia.gif', back_img: 'https://img.pokemondb.net/sprites/black-white/anim/back-normal/lugia.gif' },
     };
 
     const LEGENDARY_ENEMIES = {
         mewtwo: { name: 'Mewtwo', type: ['Psychic'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/mewtwo.gif' },
-        lugia: { name: 'Lugia', type: ['Psychic', 'Flying'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/lugia.gif' },
-        hooh: { name: 'Ho-Oh', type: ['Fire', 'Flying'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/ho-oh.gif' },
         arceus: { name: 'Arceus', type: ['Normal'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/arceus.gif' },
         dialga: { name: 'Dialga', type: ['Steel', 'Dragon'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/dialga.gif'},
         palkia: { name: 'Palkia', type: ['Water', 'Dragon'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/palkia.gif'},
-        giratina: { name: 'Giratina', type: ['Ghost', 'Dragon'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/giratina-altered.gif'}
+        giratina: { name: 'Giratina', type: ['Ghost', 'Dragon'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/giratina-altered.gif'},
+        zekrom: { name: 'Zekrom', type: ['Dragon', 'Electric'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/zekrom.gif'},
+        reshiram: { name: 'Reshiram', type: ['Dragon', 'Fire'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/reshiram.gif'},
+        kyurem: { name: 'Kyurem', type: ['Dragon', 'Ice'], front_img: 'https://img.pokemondb.net/sprites/black-white/anim/normal/kyurem.gif'},
     };
     
     // 屬性相剋表
@@ -69,6 +72,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 遊戲狀態 ---
     let gameState = {
+        isPaused: false,
+        timerId: null,
+        timerStart: null,
+        timerRemaining: 10000,
         playerPokemonData: null,
         enemyPokemonData: null,
         playerCurrentHP: 100,
@@ -79,12 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
         attackBonus: 0,
         isLegendaryMode: false,
         currentQuestion: null,
-        timerId: null,
     };
     
     // --- DOM 元素 ---
-    const screens = {start: document.getElementById('start-screen'),selection: document.getElementById('selection-screen'),battle: document.getElementById('battle-screen'),end: document.getElementById('end-screen'),};
+    const screens = {start: document.getElementById('start-screen'),selection: document.getElementById('selection-screen'),battle: document.getElementById('battle-screen'),end: document.getElementById('end-screen')};
+    const overlays = {pause: document.getElementById('pause-overlay'), teaching: document.getElementById('teaching-overlay')};
     const startButton = document.getElementById('start-button');
+    const pauseButton = document.getElementById('pause-button');
+    const resumeButton = document.getElementById('resume-button');
     const selectionTitle = document.getElementById('selection-title');
     const pokemonSelectionGrid = document.getElementById('pokemon-selection-grid');
     const confirmSelectionButton = document.getElementById('confirm-selection-button');
@@ -106,6 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const captureText = document.getElementById('capture-text');
     const playAgainNewPokemonButton = document.getElementById('play-again-new-pokemon-button');
     const playAgainLegendaryButton = document.getElementById('play-again-legendary-button');
+    const teachingText = document.getElementById('teaching-text');
+    const teachingCountdown = document.getElementById('teaching-countdown');
     
     // --- 音效管理 ---
     const audioManager = {
@@ -115,351 +126,52 @@ document.addEventListener('DOMContentLoaded', () => {
         currentMusic: null,
 
         play(sound, loop = false) {
-            if (this.currentMusic && this.currentMusic !== sound) {
-                this.currentMusic.pause();
-                this.currentMusic.currentTime = 0;
-            }
-            this.currentMusic = sound;
-            this.currentMusic.loop = loop;
-            this.currentMusic.play().catch(e => console.log("音效播放被瀏覽器阻止，請用戶與頁面互動後再試。"));
+            try {
+                if (this.currentMusic && this.currentMusic !== sound) { this.currentMusic.pause(); this.currentMusic.currentTime = 0; }
+                this.currentMusic = sound; this.currentMusic.loop = loop;
+                this.currentMusic.play().catch(() => {});
+            } catch (e) { console.error("Audio play failed:", e); }
         },
-
+        pause() { if (this.currentMusic) this.currentMusic.pause(); },
+        resume() { if (this.currentMusic) this.currentMusic.play().catch(() => {}); },
         stopAll() {
-            if (this.currentMusic) {
-                this.currentMusic.pause();
-                this.currentMusic.currentTime = 0;
-            }
-            this.battleMusic.pause(); this.battleMusic.currentTime = 0;
-            this.victoryMusic.pause(); this.victoryMusic.currentTime = 0;
-            this.evolutionMusic.pause(); this.evolutionMusic.currentTime = 0;
+            if (this.currentMusic) { this.currentMusic.pause(); this.currentMusic.currentTime = 0; }
+            Object.values(this).filter(v => v instanceof Audio).forEach(a => { a.pause(); a.currentTime = 0; });
             this.currentMusic = null;
         }
     };
     
-    // --- 函數 ---
-    function switchScreen(screenName) {
-        Object.values(screens).forEach(screen => screen.classList.add('hidden'));
-        screens[screenName].classList.remove('hidden');
-    }
-
-    function chooseNewEnemy() {
-        const enemyKeys = Object.keys(LEGENDARY_ENEMIES);
-        let randomEnemyKey = enemyKeys[Math.floor(Math.random() * enemyKeys.length)];
-        if (gameState.enemyPokemonData && randomEnemyKey === gameState.enemyPokemonData.key) {
-            randomEnemyKey = enemyKeys[(enemyKeys.indexOf(randomEnemyKey) + 1) % enemyKeys.length];
-        }
-        gameState.enemyPokemonData = { ...LEGENDARY_ENEMIES[randomEnemyKey], key: randomEnemyKey };
-    }
-
-    function populateSelectionGrid(isLegendary) {
-        audioManager.stopAll();
-        gameState.isLegendaryMode = isLegendary;
-        chooseNewEnemy();
-        
-        selectionTitle.textContent = isLegendary ? "選擇傳說 Pokémon" : "選擇你的 Pokémon";
-        enemyPreviewImg.src = gameState.enemyPokemonData.front_img;
-        enemyPreviewName.innerText = gameState.enemyPokemonData.name;
-        
-        pokemonSelectionGrid.innerHTML = '';
-        const pokemonToDisplay = Object.keys(POKEMON_DATA).filter(key => !!POKEMON_DATA[key].isLegendary === isLegendary);
-
-        pokemonToDisplay.forEach(key => {
-            const pokemon = POKEMON_DATA[key];
-            const card = document.createElement('div');
-            card.className = 'pokemon-card';
-            card.dataset.key = key;
-            card.innerHTML = `<img src="${pokemon.front_img}" alt="${pokemon.name}"><p>${pokemon.name}</p>`;
-            card.addEventListener('click', () => {
-                const selected = document.querySelector('.pokemon-card.selected');
-                if (selected) selected.classList.remove('selected');
-                card.classList.add('selected');
-                gameState.playerPokemonData = JSON.parse(JSON.stringify({ ...pokemon, key: key, currentStage: 0 }));
-                confirmSelectionButton.disabled = false;
-            });
-            pokemonSelectionGrid.appendChild(card);
-        });
-        switchScreen('selection');
-    }
-    
-    function startBattle() {
-        audioManager.play(audioManager.battleMusic, true);
-
-        const selectedKey = gameState.playerPokemonData.key;
-        const initialPokemon = POKEMON_DATA[selectedKey];
-        gameState.playerPokemonData = JSON.parse(JSON.stringify({ ...initialPokemon, key: selectedKey, currentStage: 0 }));
-
-        gameState.playerCurrentHP = 100;
-        gameState.playerMaxHP = 100;
-        gameState.enemyCurrentHP = gameState.enemyMaxHP;
-        gameState.evolutionCounter = 0;
-        gameState.attackBonus = 0;
-        
-        if(gameState.isLegendaryMode) gameState.attackBonus = 40;
-        
-        updateBattleUI();
-        
-        playerName.textContent = gameState.playerPokemonData.name;
-        playerPokemonImg.src = gameState.playerPokemonData.back_img;
-        enemyName.textContent = gameState.enemyPokemonData.name;
-        enemyPokemonImg.src = gameState.enemyPokemonData.front_img;
-        
-        messageLog.innerHTML = '';
-        logMessage(`戰鬥開始！你派出了 ${gameState.playerPokemonData.name}！`);
-        logMessage(`對手是傳說中的 ${gameState.enemyPokemonData.name}！`);
-        
-        switchScreen('battle');
-        nextQuestion();
-    }
-    
-    function updateBattleUI() {
-        playerHPBar.style.width = `${(gameState.playerCurrentHP / gameState.playerMaxHP) * 100}%`;
-        enemyHPBar.style.width = `${(gameState.enemyCurrentHP / gameState.enemyMaxHP) * 100}%`;
-        evoCounterSpan.textContent = gameState.evolutionCounter;
-        playerHPBar.style.backgroundColor = gameState.playerCurrentHP / gameState.playerMaxHP > 0.5 ? '#4CAF50' : (gameState.playerCurrentHP / gameState.playerMaxHP > 0.2 ? '#FFC107' : '#F44336');
-        enemyHPBar.style.backgroundColor = gameState.enemyCurrentHP / gameState.enemyMaxHP > 0.5 ? '#4CAF50' : (gameState.enemyCurrentHP / gameState.enemyMaxHP > 0.2 ? '#FFC107' : '#F44336');
-    }
-
-    function logMessage(msg) {
-        messageLog.innerHTML += `<p>${msg}</p>`;
-        messageLog.scrollTop = messageLog.scrollHeight;
-    }
-
-    function generateQuestion() {
-        const types = ['fraction', 'multiply', 'divide', 'subtract', 'add'];
-        const type = types[Math.floor(Math.random() * types.length)];
-        let question, answer;
-        switch (type) {
-            case 'fraction': { const a = Math.ceil(Math.random() * 9); const b = Math.ceil(Math.random() * 9); const common = Math.ceil(Math.random() * 4) + 1; question = `約簡分數: ${a * common}/${b * common}`; const gcd = (x, y) => (!y ? x : gcd(y, x % y)); const divisor = gcd(a, b); answer = `${a / divisor}/${b / divisor}`; break; }
-            case 'multiply': { const a = Math.ceil(Math.random() * 9); const b = Math.ceil(Math.random() * 9); question = `${a} × ${b} = ?`; answer = a * b; break; }
-            case 'divide': { const divisor = Math.ceil(Math.random() * 8) + 1; const result = Math.ceil(Math.random() * 8) + 1; const dividend = divisor * result; question = `${dividend} ÷ ${divisor} = ?`; answer = result; break; }
-            case 'subtract': { const a = Math.floor(Math.random() * 90) + 10; const b = Math.floor(Math.random() * (a - 1)) + 1; question = `${a} - ${b} = ?`; answer = a - b; break; }
-            case 'add': { const a = Math.floor(Math.random() * 90) + 10; const b = Math.floor(Math.random() * 90) + 10; question = `${a} + ${b} = ?`; answer = a + b; break; }
-        }
-        return { question, answer, options: generateOptions(answer) };
-    }
-    function generateOptions(correctAnswer) {
-        const options = new Set([correctAnswer]);
-        if (typeof correctAnswer === 'string') { while (options.size < 4) { const a = Math.ceil(Math.random() * 9); const b = Math.ceil(Math.random() * 9); if(b !== 0) options.add(`${a}/${b}`); } } else { while (options.size < 4) { const offset = Math.floor(Math.random() * 20) - 10; const wrongAnswer = correctAnswer + offset; if (wrongAnswer >= 0 && wrongAnswer !== correctAnswer) { options.add(wrongAnswer); } } }
-        return Array.from(options).sort(() => Math.random() - 0.5);
-    }
-    
-    function nextQuestion() {
-        clearTimeout(gameState.timerId);
-        gameState.currentQuestion = generateQuestion();
-        questionText.textContent = gameState.currentQuestion.question;
-        optionsContainer.innerHTML = '';
-        gameState.currentQuestion.options.forEach(option => {
-            const button = document.createElement('button');
-            button.textContent = option;
-            button.onclick = () => checkAnswer(option);
-            optionsContainer.appendChild(button);
-        });
-        timerBar.style.transition = 'none';
-        timerBar.style.width = '100%';
-        void timerBar.offsetWidth; 
-        timerBar.style.transition = 'width 10s linear';
-        timerBar.style.width = '0%';
-        gameState.timerId = setTimeout(() => handleIncorrectAnswer("時間到！"), 10000);
-    }
-
-    function checkAnswer(selectedAnswer) {
-        clearTimeout(gameState.timerId);
-        optionsContainer.innerHTML = '<p>處理中...</p>';
-        if (String(selectedAnswer) === String(gameState.currentQuestion.answer)) {
-            handleCorrectAnswer();
-        } else {
-            handleIncorrectAnswer(`答錯了！正確答案是 ${gameState.currentQuestion.answer}`);
-        }
-    }
-
-    function handleCorrectAnswer() {
-        logMessage("答對了！");
-        gameState.evolutionCounter++;
-        playerAttack();
-    }
-
-    function handleIncorrectAnswer(reason) {
-        logMessage(reason);
-        enemyAttack();
-    }
-    
-    function getDamageMultiplier(attackerTypes, defenderTypes) {
-        let multiplier = 1;
-        if (!attackerTypes || !defenderTypes) return 1;
-        attackerTypes.forEach(attackType => {
-            defenderTypes.forEach(defendType => {
-                if (TYPE_CHART[attackType] && TYPE_CHART[attackType][defendType] !== undefined) {
-                    multiplier *= TYPE_CHART[attackType][defendType];
-                }
-            });
-        });
-        return multiplier;
-    }
-
-    function playerAttack() {
-        const baseDamage = Math.floor(Math.random() * 5) + 20 + gameState.attackBonus;
-        const multiplier = getDamageMultiplier(gameState.playerPokemonData.type, gameState.enemyPokemonData.type);
-        const totalDamage = Math.round(baseDamage * multiplier);
-        
-        gameState.enemyCurrentHP = Math.max(0, gameState.enemyCurrentHP - totalDamage);
-        
-        enemyPokemonImg.classList.add('attack-animation');
-        setTimeout(() => enemyPokemonImg.classList.remove('attack-animation'), 500);
-
-        logMessage(`${gameState.playerPokemonData.name} 造成了 ${totalDamage} 點傷害！`);
-        if (multiplier > 1) logMessage("效果絕佳！");
-        if (multiplier < 1 && multiplier > 0) logMessage("效果不太好...");
-        
-        updateBattleUI();
-        
-        setTimeout(() => {
-            if (gameState.enemyCurrentHP <= 0) {
-                endGame(true);
-            } else {
-                checkForEvolution();
-            }
-        }, 1000);
-    }
-
-    function checkForEvolution() {
-        const { evolutionCounter, playerPokemonData, isLegendaryMode } = gameState;
-        let didEvolve = false;
-        let nextEvolutionData = null;
-        let evolutionStage = 0;
-        let evolutionType = "進化";
-
-        if (isLegendaryMode) {
-            // **傳說 Pokémon 進化條件縮短為 4 題**
-            if (playerPokemonData.currentStage === 0 && evolutionCounter >= 4 && (playerPokemonData.mega || playerPokemonData.primal)) {
-                nextEvolutionData = playerPokemonData.mega || playerPokemonData.primal;
-                evolutionType = playerPokemonData.primal ? "原始回歸" : "超級進化";
-                evolutionStage = 1; 
-            }
-        } else {
-            // 普通 Pokémon 進化條件不變
-            if (playerPokemonData.currentStage === 0 && evolutionCounter >= 4 && playerPokemonData.evolution) {
-                nextEvolutionData = playerPokemonData.evolution;
-                evolutionStage = 1;
-            } else if (playerPokemonData.currentStage === 1 && evolutionCounter >= 8 && playerPokemonData.evolution && playerPokemonData.evolution.evolution) {
-                nextEvolutionData = playerPokemonData.evolution.evolution;
-                evolutionStage = 2;
-            } else if (playerPokemonData.currentStage === 2 && evolutionCounter >= 12) {
-                if (playerPokemonData.mega) {
-                    nextEvolutionData = playerPokemonData.mega;
-                    evolutionType = "超級進化";
-                    evolutionStage = 3;
-                } else if (playerPokemonData.gmax) {
-                    nextEvolutionData = playerPokemonData.gmax;
-                    evolutionType = "極巨化";
-                    evolutionStage = 3;
-                }
-            }
-        }
-        
-        if (nextEvolutionData) {
-            evolvePokemon(nextEvolutionData, evolutionStage, evolutionType);
-            didEvolve = true;
-        }
-
-        if (!didEvolve) {
-            nextQuestion();
-        }
-    }
-    
-    function evolvePokemon(evolutionData, stage, type) {
-        audioManager.play(audioManager.evolutionMusic);
-        logMessage(`什麼？ ${gameState.playerPokemonData.name} 正在${type}！`);
-        playerPokemonImg.classList.add('evolution-animation');
-        
-        setTimeout(() => {
-            playerPokemonImg.classList.remove('evolution-animation');
-            const oldName = gameState.playerPokemonData.name;
-            
-            const currentPokemon = gameState.playerPokemonData;
-            const newPokemon = { ...currentPokemon, ...evolutionData, currentStage: stage };
-            if (stage === 1 && currentPokemon.evolution) newPokemon.evolution = currentPokemon.evolution;
-            if (stage === 2 && currentPokemon.evolution && currentPokemon.evolution.evolution) newPokemon.evolution.evolution = currentPokemon.evolution.evolution;
-
-            gameState.playerPokemonData = newPokemon;
-            
-            gameState.attackBonus += (type !== "進化") ? 20 : 5;
-            gameState.playerCurrentHP = Math.min(gameState.playerMaxHP, gameState.playerCurrentHP + 25);
-
-            logMessage(`${oldName} ${type}成了 ${gameState.playerPokemonData.name}！`);
-            logMessage(`${gameState.playerPokemonData.name} 的力量大幅提升了，並回復了生命值！`);
-
-            playerPokemonImg.src = gameState.playerPokemonData.back_img;
-            playerName.textContent = gameState.playerPokemonData.name;
-            updateBattleUI();
-
-            const evolutionMusicDuration = 2500; 
-            setTimeout(() => {
-                if (audioManager.currentMusic === audioManager.evolutionMusic) {
-                     audioManager.play(audioManager.battleMusic, true);
-                }
-                nextQuestion();
-            }, evolutionMusicDuration);
-        }, 2500);
-    }
-
-    function enemyAttack() {
-        const baseDamage = Math.floor(Math.random() * 10) + 15;
-        const multiplier = getDamageMultiplier(gameState.enemyPokemonData.type, gameState.playerPokemonData.type);
-        const totalDamage = Math.round(baseDamage * multiplier);
-        gameState.playerCurrentHP = Math.max(0, gameState.playerCurrentHP - totalDamage);
-        
-        playerPokemonImg.classList.add('attack-animation');
-        setTimeout(() => playerPokemonImg.classList.remove('attack-animation'), 500);
-        
-        logMessage(`${gameState.enemyPokemonData.name} 造成了 ${totalDamage} 點傷害！`);
-        updateBattleUI();
-        
-        setTimeout(() => {
-            if (gameState.playerCurrentHP <= 0) {
-                endGame(false);
-            } else {
-                nextQuestion();
-            }
-        }, 1000);
-    }
-    
-    function endGame(playerWon) {
-        clearTimeout(gameState.timerId);
-        audioManager.stopAll();
-        if (playerWon) audioManager.play(audioManager.victoryMusic);
-        
-        switchScreen('end');
-        captureResultImg.classList.add('hidden');
-        captureText.textContent = '';
-        
-        if (playerWon) {
-            endMessage.textContent = '你贏了！';
-            setTimeout(() => {
-                if (Math.random() < 0.5) {
-                    captureResultImg.src = `https://img.pokemondb.net/sprites/items/poke-ball.png`;
-                    captureText.textContent = `成功捕捉 ${gameState.enemyPokemonData.name}！`;
-                } else {
-                    captureResultImg.src = gameState.enemyPokemonData.front_img;
-                    captureText.textContent = `噢，不！ ${gameState.enemyPokemonData.name} 逃走了！`;
-                }
-                captureResultImg.classList.remove('hidden');
-            }, 1000);
-        } else {
-            endMessage.textContent = '遊戲結束';
-        }
-    }
+    // --- 遊戲主函數 ---
+    // (後半段 JavaScript 程式碼與之前版本幾乎相同，僅在計時器、錯誤處理和進化邏輯處有微調，請直接複製貼上即可)
+    function switchScreen(screenName) { Object.values(screens).forEach(s => s.classList.add('hidden')); screens[screenName].classList.remove('hidden'); }
+    function chooseNewEnemy() { const keys = Object.keys(LEGENDARY_ENEMIES); let key = keys[Math.floor(Math.random() * keys.length)]; if (gameState.enemyPokemonData && key === gameState.enemyPokemonData.key) { key = keys[(keys.indexOf(key) + 1) % keys.length]; } gameState.enemyPokemonData = { ...LEGENDARY_ENEMIES[key], key }; }
+    function populateSelectionGrid(isLegendary) { audioManager.stopAll(); gameState.isLegendaryMode = isLegendary; chooseNewEnemy(); selectionTitle.textContent = isLegendary ? "選擇傳說 Pokémon" : "選擇你的 Pokémon"; enemyPreviewImg.src = gameState.enemyPokemonData.front_img; enemyPreviewName.innerText = gameState.enemyPokemonData.name; pokemonSelectionGrid.innerHTML = ''; const toDisplay = Object.keys(POKEMON_DATA).filter(key => !!POKEMON_DATA[key].isLegendary === isLegendary); toDisplay.forEach(key => { const p = POKEMON_DATA[key]; const card = document.createElement('div'); card.className = 'pokemon-card'; card.dataset.key = key; card.innerHTML = `<img src="${p.front_img}" alt="${p.name}"><p>${p.name}</p>`; card.addEventListener('click', () => { document.querySelector('.pokemon-card.selected')?.classList.remove('selected'); card.classList.add('selected'); gameState.playerPokemonData = JSON.parse(JSON.stringify({ ...p, key, currentStage: 0 })); confirmSelectionButton.disabled = false; }); pokemonSelectionGrid.appendChild(card); }); switchScreen('selection'); }
+    function startBattle() { audioManager.play(audioManager.battleMusic, true); const key = gameState.playerPokemonData.key; const initial = POKEMON_DATA[key]; gameState.playerPokemonData = JSON.parse(JSON.stringify({ ...initial, key, currentStage: 0 })); Object.assign(gameState, { playerCurrentHP: 100, playerMaxHP: 100, enemyCurrentHP: gameState.enemyMaxHP, evolutionCounter: 0, attackBonus: gameState.isLegendaryMode ? 40 : 0 }); updateBattleUI(); playerName.textContent = gameState.playerPokemonData.name; playerPokemonImg.src = gameState.playerPokemonData.back_img; enemyName.textContent = gameState.enemyPokemonData.name; enemyPokemonImg.src = gameState.enemyPokemonData.front_img; messageLog.innerHTML = ''; logMessage(`戰鬥開始！你派出了 ${gameState.playerPokemonData.name}！`); logMessage(`對手是傳說中的 ${gameState.enemyPokemonData.name}！`); switchScreen('battle'); nextQuestion(); }
+    function updateBattleUI() { playerHPBar.style.width = `${(gameState.playerCurrentHP / gameState.playerMaxHP) * 100}%`; enemyHPBar.style.width = `${(gameState.enemyCurrentHP / gameState.enemyMaxHP) * 100}%`; evoCounterSpan.textContent = gameState.evolutionCounter; playerHPBar.style.backgroundColor = gameState.playerCurrentHP / gameState.playerMaxHP > 0.5 ? '#4CAF50' : '#F44336'; enemyHPBar.style.backgroundColor = gameState.enemyCurrentHP / gameState.enemyMaxHP > 0.5 ? '#4CAF50' : '#F44336'; }
+    function logMessage(msg) { messageLog.innerHTML += `<p>${msg}</p>`; messageLog.scrollTop = messageLog.scrollHeight; }
+    function getExplanation(q) { const [val1, op, val2] = q.question.replace('=', '?').split(' '); switch (q.type) { case 'fraction': const [num, den] = val1.split('/'); const gcd = (a, b) => b ? gcd(b, a % b) : a; const divisor = gcd(num, den); return `這題是分數約簡。<br>1. 找出分子 ${num} 和分母 ${den} 的最大公因數，也就是 ${divisor}。<br>2. 將分子和分母同時除以 ${divisor}。<br>3. ${num} ÷ ${divisor} = ${num/divisor}，${den} ÷ ${divisor} = ${den/divisor}。<br><b>正確答案是：${q.answer}</b>`; case 'multiply': return `這題是個位數乘法。<br>直接計算 ${val1} 乘以 ${val2}。<br><b>正確答案是：${q.answer}</b>`; case 'divide': return `這題是整除。<br>思考 ${val2} 乘以哪個數會等於 ${val1}。<br><b>正確答案是：${q.answer}</b>`; case 'add': return `這題是兩位數加法。<br>將個位數與十位數分別相加，並處理進位。<br><b>正確答案是：${q.answer}</b>`; case 'subtract': return `這題是兩位數減法。<br>將個位數與十位數分別相減，並處理借位。<br><b>正確答案是：${q.answer}</b>`; default: return `正確答案是 ${q.answer}`; } }
+    function generateQuestion() { const types = ['fraction', 'multiply', 'divide', 'subtract', 'add']; const type = types[Math.floor(Math.random() * types.length)]; let question, answer, qParts = {}; switch (type) { case 'fraction': { const a = Math.ceil(Math.random() * 9); const b = Math.ceil(Math.random() * 9); const common = Math.ceil(Math.random() * 4) + 1; qParts = {val1: `${a*common}/${b*common}`}; question = `${qParts.val1}`; const gcd = (x, y) => !y ? x : gcd(y, x % y); const divisor = gcd(a, b); answer = `${a/divisor}/${b/divisor}`; break; } case 'multiply': { qParts.val1 = Math.ceil(Math.random() * 9); qParts.val2 = Math.ceil(Math.random() * 9); question = `${qParts.val1} × ${qParts.val2} = ?`; answer = qParts.val1 * qParts.val2; break; } case 'divide': { const divisor = Math.ceil(Math.random() * 8) + 1; const result = Math.ceil(Math.random() * 8) + 1; qParts.val1 = divisor * result; qParts.val2 = divisor; question = `${qParts.val1} ÷ ${qParts.val2} = ?`; answer = result; break; } case 'subtract': { const a = Math.floor(Math.random() * 90) + 10; const b = Math.floor(Math.random() * (a - 1)) + 1; qParts.val1 = a; qParts.val2 = b; question = `${a} - ${b} = ?`; answer = a - b; break; } case 'add': { const a = Math.floor(Math.random() * 90) + 10; const b = Math.floor(Math.random() * 90) + 10; qParts.val1 = a; qParts.val2 = b; question = `${a} + ${b} = ?`; answer = a + b; break; } } return { question, answer, type, qParts, options: generateOptions(answer) }; }
+    function generateOptions(correctAnswer) { const options = new Set([correctAnswer]); if (typeof correctAnswer === 'string') { while (options.size < 4) { const a = Math.ceil(Math.random() * 9); const b = Math.ceil(Math.random() * 9); if(b !== 0) options.add(`${a}/${b}`); } } else { while (options.size < 4) { const offset = Math.floor(Math.random() * 20) - 10; const wrongAnswer = correctAnswer + offset; if (wrongAnswer >= 0 && wrongAnswer !== correctAnswer) { options.add(wrongAnswer); } } } return Array.from(options).sort(() => Math.random() - 0.5); }
+    function startTimer(duration) { clearTimeout(gameState.timerId); gameState.timerStart = Date.now(); gameState.timerRemaining = duration; timerBar.style.transition = ''; timerBar.style.width = '100%'; void timerBar.offsetWidth; timerBar.style.transition = `width ${duration / 1000}s linear`; timerBar.style.width = '0%'; gameState.timerId = setTimeout(() => handleIncorrectAnswer("時間到！"), duration); }
+    function pauseTimer() { clearTimeout(gameState.timerId); const elapsed = Date.now() - gameState.timerStart; gameState.timerRemaining -= elapsed; const remainingWidth = (gameState.timerRemaining / 10000) * 100; timerBar.style.transition = 'none'; timerBar.style.width = `${remainingWidth}%`; }
+    function nextQuestion() { startTimer(10000); gameState.currentQuestion = generateQuestion(); questionText.textContent = `問題：${gameState.currentQuestion.question.includes('=') ? gameState.currentQuestion.question : gameState.currentQuestion.question.replace('?', '= ?')}`; optionsContainer.innerHTML = ''; gameState.currentQuestion.options.forEach(o => { const btn = document.createElement('button'); btn.textContent = o; btn.onclick = () => checkAnswer(o); optionsContainer.appendChild(btn); }); }
+    function checkAnswer(selected) { pauseTimer(); optionsContainer.innerHTML = '<p>處理中...</p>'; if (String(selected) === String(gameState.currentQuestion.answer)) { handleCorrectAnswer(); } else { handleIncorrectAnswer(`答錯了！`); } }
+    function handleCorrectAnswer() { logMessage("答對了！"); gameState.evolutionCounter++; playerAttack(); }
+    function handleIncorrectAnswer(reason) { logMessage(reason); let countdown = 10; teachingText.innerHTML = getExplanation(gameState.currentQuestion); teachingCountdown.textContent = countdown; overlays.teaching.classList.remove('hidden'); const interval = setInterval(() => { countdown--; teachingCountdown.textContent = countdown; if (countdown <= 0) { clearInterval(interval); overlays.teaching.classList.add('hidden'); enemyAttack(); } }, 1000); }
+    function getDamageMultiplier(attacker, defender) { let m = 1; if (!attacker || !defender) return 1; attacker.forEach(at => defender.forEach(dt => { if (TYPE_CHART[at]?.[dt] !== undefined) m *= TYPE_CHART[at][dt]; })); return m; }
+    function playerAttack() { const base = Math.floor(Math.random() * 5) + 20 + gameState.attackBonus; const mult = getDamageMultiplier(gameState.playerPokemonData.type, gameState.enemyPokemonData.type); const total = Math.round(base * mult); gameState.enemyCurrentHP = Math.max(0, gameState.enemyCurrentHP - total); enemyPokemonImg.classList.add('attack-animation'); setTimeout(() => enemyPokemonImg.classList.remove('attack-animation'), 500); logMessage(`${gameState.playerPokemonData.name} 造成了 ${total} 點傷害！`); if (mult > 1) logMessage("效果絕佳！"); if (mult < 1 && mult > 0) logMessage("效果不太好..."); updateBattleUI(); setTimeout(() => { if (gameState.enemyCurrentHP <= 0) endGame(true); else checkForEvolution(); }, 1000); }
+    function checkForEvolution() { const { evolutionCounter, playerPokemonData, isLegendaryMode } = gameState; let didEvolve = false, nextEvoData = null, evoStage = 0, evoType = "進化"; if (isLegendaryMode) { if (playerPokemonData.currentStage === 0 && evolutionCounter >= 4 && (playerPokemonData.mega || playerPokemonData.primal)) { nextEvoData = playerPokemonData.mega || playerPokemonData.primal; evoType = playerPokemonData.primal ? "原始回歸" : "超級進化"; evoStage = 1; } } else { if (playerPokemonData.currentStage === 0 && evolutionCounter >= 4 && playerPokemonData.evolution) { nextEvoData = playerPokemonData.evolution; evoStage = 1; } else if (playerPokemonData.currentStage === 1 && evolutionCounter >= 8 && playerPokemonData.evolution?.evolution) { nextEvoData = playerPokemonData.evolution.evolution; evoStage = 2; } else if (playerPokemonData.currentStage === 2 && evolutionCounter >= 12) { if (playerPokemonData.mega) { nextEvoData = playerPokemonData.mega; evoType = "超級進化"; evoStage = 3; } else if (playerPokemonData.gmax) { nextEvoData = playerPokemonData.gmax; evoType = "極巨化"; evoStage = 3; } } } if (nextEvoData) { evolvePokemon(nextEvoData, evoStage, evoType); didEvolve = true; } if (!didEvolve) nextQuestion(); }
+    function evolvePokemon(evoData, stage, type) { audioManager.play(audioManager.evolutionMusic); logMessage(`什麼？ ${gameState.playerPokemonData.name} 正在${type}！`); playerPokemonImg.classList.add('evolution-animation'); setTimeout(() => { playerPokemonImg.classList.remove('evolution-animation'); const oldName = gameState.playerPokemonData.name; const current = gameState.playerPokemonData; const newPokemon = { ...current, ...evoData, currentStage: stage }; if (stage === 1 && current.evolution) newPokemon.evolution = current.evolution; if (stage === 2 && current.evolution?.evolution) newPokemon.evolution.evolution = current.evolution.evolution; gameState.playerPokemonData = newPokemon; gameState.attackBonus += (type !== "進化") ? 20 : 5; gameState.playerCurrentHP = Math.min(gameState.playerMaxHP, gameState.playerCurrentHP + 25); logMessage(`${oldName} ${type}成了 ${gameState.playerPokemonData.name}！`); logMessage(`${newPokemon.name} 的力量大幅提升了，並回復了生命值！`); playerPokemonImg.src = newPokemon.back_img; playerName.textContent = newPokemon.name; updateBattleUI(); setTimeout(() => { if (audioManager.currentMusic === audioManager.evolutionMusic) audioManager.play(audioManager.battleMusic, true); nextQuestion(); }, 2000); }, 2500); }
+    function enemyAttack() { const mult = getDamageMultiplier(gameState.enemyPokemonData.type, gameState.playerPokemonData.type); const total = Math.round((Math.floor(Math.random() * 10) + 15) * mult); gameState.playerCurrentHP = Math.max(0, gameState.playerCurrentHP - total); playerPokemonImg.classList.add('attack-animation'); setTimeout(() => playerPokemonImg.classList.remove('attack-animation'), 500); logMessage(`${gameState.enemyPokemonData.name} 造成了 ${total} 點傷害！`); updateBattleUI(); setTimeout(() => { if (gameState.playerCurrentHP <= 0) endGame(false); else nextQuestion(); }, 1000); }
+    function endGame(playerWon) { clearTimeout(gameState.timerId); audioManager.stopAll(); if (playerWon) audioManager.play(audioManager.victoryMusic); switchScreen('end'); captureResultImg.classList.add('hidden'); captureText.textContent = ''; if (playerWon) { endMessage.textContent = '你贏了！'; setTimeout(() => { captureResultImg.src = Math.random() < 0.5 ? `https://img.pokemondb.net/sprites/items/poke-ball.png` : gameState.enemyPokemonData.front_img; captureText.textContent = captureResultImg.src.includes('poke-ball') ? `成功捕捉 ${gameState.enemyPokemonData.name}！` : `噢，不！ ${gameState.enemyPokemonData.name} 逃走了！`; captureResultImg.classList.remove('hidden'); }, 1000); } else { endMessage.textContent = '遊戲結束'; } }
     
     // --- 事件監聽 ---
     startButton.addEventListener('click', () => populateSelectionGrid(false));
     confirmSelectionButton.addEventListener('click', startBattle);
-    playAgainNewPokemonButton.addEventListener('click', () => {
-        confirmSelectionButton.disabled = true;
-        populateSelectionGrid(false);
-    });
-    playAgainLegendaryButton.addEventListener('click', () => {
-        confirmSelectionButton.disabled = true;
-        populateSelectionGrid(true);
-    });
+    playAgainNewPokemonButton.addEventListener('click', () => { confirmSelectionButton.disabled = true; populateSelectionGrid(false); });
+    playAgainLegendaryButton.addEventListener('click', () => { confirmSelectionButton.disabled = true; populateSelectionGrid(true); });
+    pauseButton.addEventListener('click', () => { gameState.isPaused = true; pauseTimer(); audioManager.pause(); overlays.pause.classList.remove('hidden'); });
+    resumeButton.addEventListener('click', () => { gameState.isPaused = false; overlays.pause.classList.add('hidden'); audioManager.resume(); startTimer(gameState.timerRemaining); });
 
     switchScreen('start');
 });
